@@ -1,6 +1,8 @@
 <script>
-    import { characters, searchFilter, filter } from './store.js';
+import { onMount } from 'svelte';
 
+    import { characters, searchFilter } from './store.js';
+    
     function toggle(event) {
             const div = event.path[1]
             const eleInfo = div.querySelector('.card__information');
@@ -10,39 +12,40 @@
             else
                 setTimeout(() => eleInfo.classList.toggle('card__information--collapse'), 270);
         }
+    
 </script>
 <nav>
     <a href="/"> Home </a>
     <div class="separador">
       <input id="query" type="text" class="input" placeholder="Search for a Character" bind:value={$searchFilter}>
-      <input type="button" value="search" class="close-btn" >
+      <input type="button" value="search" class="close-btn" on:click={characters.filter($searchFilter)}>
     </div>
 </nav>
 <div class="container__cards">
-    {#each $characters as character}
-        <div class="card" on:click="{toggle}"> 
-            <img class="card__image" src="{character.thumbnail.path}/standard_fantastic.{character.thumbnail.extension}" alt="${character.id}"/>
-            <h3 class="card__title">{character.name}</h3>
-            <div class="card__information">
-                <h4 class="card__subtitle">comics</h4>
-                {#each character.comics.items.slice(0,3) as comic}
-                    <ul>
-                        <li>{comic.name}</li>
-                    </ul>
-                {/each}
-                <h4 class="card__subtitle">description</h4>
-                {#if character.description != ''}
-                    <p>
-                        {character.description}
-                    </p>
-                {:else}
-                    <p v-else>
-                        This character doesnt have a description.
-                    </p>
-                {/if}
+        {#each $characters as character}
+            <div class="card" on:click="{toggle}"> 
+                <img class="card__image" src="{character.thumbnail.path}/standard_fantastic.{character.thumbnail.extension}" alt="${character.id}"/>
+                <h3 class="card__title">{character.name}</h3>
+                <div class="card__information">
+                    <h4 class="card__subtitle">comics</h4>
+                    {#each character.comics.items.slice(0,3) as comic}
+                        <ul>
+                            <li>{comic.name}</li>
+                        </ul>
+                    {/each}
+                    <h4 class="card__subtitle">description</h4>
+                    {#if character.description != ''}
+                        <p>
+                            {character.description}
+                        </p>
+                    {:else}
+                        <p v-else>
+                            This character doesnt have a description.
+                        </p>
+                    {/if}
+                </div>
             </div>
-        </div>
-    {/each}
+        {/each}
 </div>
 
 <style lang="css">
