@@ -3,6 +3,9 @@
     import { characters, character, comics, searchFilter, currentComponent } from './store.js';
     
     function toggle(event) {
+            console.log('event');
+            console.log(event);
+            console.log(event.path);
             const div = event.path[1]
             const eleInfo = div.querySelector('.card__information');
             div.classList.toggle('card--active');
@@ -27,7 +30,7 @@
 </nav>
 <div class="container__cards">
         {#each $characters as character}
-            <div class="card" on:click="{goTo(character.id)}"> 
+            <div class="card" on:click="{toggle}"> 
                 <img class="card__image" src="{character.thumbnail.path}/standard_fantastic.{character.thumbnail.extension}" alt="${character.id}"/>
                 <h3 class="card__title">{character.name}</h3>
                 <div class="card__information">
@@ -125,11 +128,11 @@
       transition-duration: var(--transition-duration);
       transition-timing-function: var(--transition-function);
     }
-    .card__information--collapse {
-      opacity: 1;
-      height: calc(100% - 2.35rem);
+    :global(.card__information--collapse) {
+      opacity: 1 !important;
+      height: calc(100% - 2.35rem) !important;
     }
-    .card__link {
+    :global(.card__link) {
       display: block;
       width: max-content;
       margin: .5rem auto;
@@ -141,15 +144,15 @@
       font-weight: var(--font-weight-bold);
       background-color: rgba(255, 255, 255, .7);
     }
-    .card__link:hover {
+    :global(.card__link:hover) {
       background-color: var(--white);
     }
     /* Active */
-    .card--active .card__title {
+    :global(.card--active .card__title) {
       bottom: calc(100% - 2.4rem);
       box-shadow: 0 0.65rem 1rem rgba(0,0,0,0.25), 0 .7rem 1.2rem rgba(0,0,0,0.22);
     }
-    .card--active .card__title:after {
+    :global(.card--active .card__title:after) {
       top: 2.4rem;
       transform: skew(-50deg);
     }
