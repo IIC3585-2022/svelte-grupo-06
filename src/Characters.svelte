@@ -1,7 +1,6 @@
 <script>
-import { onMount } from 'svelte';
 
-    import { characters, searchFilter } from './store.js';
+    import { characters, character, comics, searchFilter, currentComponent } from './store.js';
     
     function toggle(event) {
             const div = event.path[1]
@@ -11,8 +10,13 @@ import { onMount } from 'svelte';
                 eleInfo.classList.toggle('card__information--collapse')
             else
                 setTimeout(() => eleInfo.classList.toggle('card__information--collapse'), 270);
-        }
-    
+        }   
+        
+    function goTo(id) {
+      character.selectCharacter(id)
+      comics.getComics(id)
+      currentComponent.update(n=>1)
+    }
 </script>
 <nav>
     <a href="/"> Home </a>
@@ -23,7 +27,7 @@ import { onMount } from 'svelte';
 </nav>
 <div class="container__cards">
         {#each $characters as character}
-            <div class="card" on:click="{toggle}"> 
+            <div class="card" on:click="{goTo(character.id)}"> 
                 <img class="card__image" src="{character.thumbnail.path}/standard_fantastic.{character.thumbnail.extension}" alt="${character.id}"/>
                 <h3 class="card__title">{character.name}</h3>
                 <div class="card__information">
@@ -164,4 +168,4 @@ import { onMount } from 'svelte';
         grid-template-columns: 1fr;
       }
     }
-    </style>
+</style>
