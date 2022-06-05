@@ -68,7 +68,3 @@ export const character = createCharacter();
 export const comics = createComics();
 
 export const currentComponent = writable(0);
-
-export function switchView () {
-    currentComponent == 0 ? currentComponent.update(n=>1) : currentComponent.update(n=>0)
-}

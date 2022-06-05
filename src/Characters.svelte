@@ -3,23 +3,21 @@
     import { characters, character, comics, searchFilter, currentComponent } from './store.js';
     
     function toggle(event) {
-            console.log('event');
-            console.log(event);
-            console.log(event.path);
-            const div = event.path[1]
-            const eleInfo = div.querySelector('.card__information');
-            div.classList.toggle('card--active');
-            if (!div.classList.contains('card--active'))
-                eleInfo.classList.toggle('card__information--collapse')
-            else
-                setTimeout(() => eleInfo.classList.toggle('card__information--collapse'), 270);
-        }   
+        const div = event.path[1]
+        const eleInfo = div.querySelector('.card__information');
+        div.classList.toggle('card--active');
+        if (!div.classList.contains('card--active'))
+            eleInfo.classList.toggle('card__information--collapse')
+        else
+            setTimeout(() => eleInfo.classList.toggle('card__information--collapse'), 270);
+    }   
         
     function goTo(id) {
-      character.selectCharacter(id)
-      comics.getComics(id)
-      currentComponent.update(n=>1)
+        character.selectCharacter(id)
+        comics.getComics(id)
+        currentComponent.update(n=>1)
     }
+
 </script>
 <nav>
     <a href="/"> Home </a>
@@ -50,6 +48,7 @@
                             This character doesnt have a description.
                         </p>
                     {/if}
+                    <button class="card__link" on:click="{goTo(character.id)}">more detail</button>
                 </div>
             </div>
         {/each}
@@ -143,6 +142,7 @@
       text-transform: uppercase;
       font-weight: var(--font-weight-bold);
       background-color: rgba(255, 255, 255, .7);
+      cursor: pointer;
     }
     :global(.card__link:hover) {
       background-color: var(--white);
