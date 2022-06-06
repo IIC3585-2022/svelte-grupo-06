@@ -22,7 +22,7 @@
             <div class="dummy"></div>
             <div class="description">
                 <h1 class="char-name">{$character.name}</h1>
-                <p class="description-par">{$character.description ? $character.description: "Este personaje no cuenta con una descripción"}</p>
+                <p class="description-par">{$character.description ? $character.description: "This character doesn't have a description"}</p>
             </div>
         </div>
         <div>
@@ -39,17 +39,17 @@
                                     <ul>
                                         <li>{story.name}</li>
                                     </ul>
-                                    <h4 class="card__subtitle">description</h4>
-                                    {#if comic.description != ""}
-                                        <p>
-                                            {comic.description}
-                                        </p>
-                                    {:else}
-                                        <p>
-                                            This comic doesnt have a description.
-                                        </p>
-                                    {/if}
                                 {/each}
+                                <h4 class="card__subtitle">description</h4>
+                                {#if comic.description != "" && comic.description != null}
+                                    <p>
+                                        {comic.description}
+                                    </p>
+                                {:else}
+                                    <p>
+                                        This comic doesnt have a description.
+                                    </p>
+                                {/if}
                             {/if}
                         </div>
                     </div>
